@@ -130,6 +130,7 @@ public class Photo extends DataObject {
 	Long idLong;
 	@Parent
 	Key parent = ObjectManager.applicationRootKey;
+	private Location location;
 
 	/**
 	 *
@@ -137,6 +138,7 @@ public class Photo extends DataObject {
 	public Photo() {
 		id = PhotoId.getNextId();
 		incWriteCount();
+		location = new Location();
 	}
 
 	/**
@@ -144,7 +146,7 @@ public class Photo extends DataObject {
 	 */
 	public Photo(PhotoId myId) {
 		id = myId;
-
+		location = new Location();
 		incWriteCount();
 	}
 
@@ -417,5 +419,13 @@ public class Photo extends DataObject {
 	public void setNoNewPraise() {
 		noVotesAtLastNotification = noVotes;
 		incWriteCount();
+	}
+	
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
 	}
 }

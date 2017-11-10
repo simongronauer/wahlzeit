@@ -12,7 +12,7 @@ public class CoordinateLocationTest {
 	
 	@Before
 	public void start() {
-		coordA = new Coordinate(0.0, 0.0, 0.0);
+		coordA = new Coordinate();
 		coordB = new Coordinate(1.0, 2.0, 3.0);
 		locA = new Location (coordA);
 		locB = new Location (coordB);

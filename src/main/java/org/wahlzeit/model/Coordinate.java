@@ -11,6 +11,22 @@ public class Coordinate {
 		this.y = y;
 		this.z = z;
 	}
+	
+	public Coordinate() {
+		this(0, 0, 0);
+	}
+	
+	public void setX(double x) {
+		this.x = x;
+	}
+	
+	public void setY(double y) {
+		this.y = x;
+	}
+	
+	public void setZ(double z) {
+		this.z = z;
+	}
     
 	public double getX() {
         return x;
@@ -34,7 +50,10 @@ public class Coordinate {
 	}
     
     protected boolean isEqual(Coordinate other){
-        return getX()== other.getX() && getY() == other.getY() && getZ() == this.getZ();
+    	double epsilon = 0.00001;
+        return ((Math.abs(getX() - other.getX()) < epsilon) && 
+				(Math.abs(getY() - other.getY()) < epsilon) &&
+				(Math.abs(getZ() - other.getZ()) < epsilon));
     }
     
     @Override 
