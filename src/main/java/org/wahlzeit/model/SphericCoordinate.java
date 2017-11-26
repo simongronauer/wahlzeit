@@ -1,7 +1,8 @@
 package org.wahlzeit.model;
 
-public class SphericCoordinate implements Coordinate {
+public class SphericCoordinate extends AbstractCoordinate {
 	
+	private final double EARTHRADIUS = 6371.0;
 	private double latitude;
 	private double longitude;
 	private double radius;
@@ -47,24 +48,16 @@ public class SphericCoordinate implements Coordinate {
     
     @Override
     public boolean isEqual(Coordinate other){
-    	CartesianCoordinate b = this.cartesianCoordinate();
-    	CartesianCoordinate c = other.cartesianCoordinate();
+    	CartesianCoordinate b = this.asCartesianCoordinate();
+    	CartesianCoordinate c = other.asCartesianCoordinate();
     	double epsilon = 0.00001;
         return ((Math.abs(b.getX() - c.getX()) < epsilon) && 
 				(Math.abs(b.getY() - c.getY()) < epsilon) &&
 				(Math.abs(b.getZ() - c.getZ()) < epsilon));
     }
-    
-    @Override 
-    public boolean equals(Object obj) {
-        if(obj instanceof CartesianCoordinate){
-            return isEqual((CartesianCoordinate) obj);
-        }
-        return false;
-    }
 
 	@Override
-	public CartesianCoordinate cartesianCoordinate() {
+	public CartesianCoordinate asCartesianCoordinate() {
 		if( radius == 0 ) return new CartesianCoordinate();
 		double x = radius * Math.sin(longitude) * Math.cos(latitude);
 		double y = radius * Math.sin(longitude) * Math.sin(latitude);
@@ -72,19 +65,34 @@ public class SphericCoordinate implements Coordinate {
 		return new CartesianCoordinate(x,y,z);
 	}
 
-	@Override
-	public double getCartesianDistance(Coordinate c) {
-		return c.cartesianCoordinate().getDistance(cartesianCoordinate());
-	}
 
 	@Override
-	public SphericCoordinate sphericCoordinate() {
+	public SphericCoordinate asSphericCoordinate() {
 		return this;
 	}
 
+	public int hashCode() {
+		 final int prime = 31;
+		 int result = 1;
+		 long temp;
+		 temp = Double.doubleToLongBits(latitude);
+		 result = prime * result + (int) (temp ^ (temp >>> 32));
+		 temp = Double.doubleToLongBits(longitude);
+		 result = prime * result + (int) (temp ^ (temp >>> 32));
+		 temp = Double.doubleToLongBits(radius);
+		 result = prime * result + (int) (temp ^ (temp >>> 32));
+		 return result;
+	}
+
 	@Override
-	public double getSphericDistance(Coordinate c) {
-		return c.sphericCoordinate().getDistance(this);
+	public double calcDistance(Coordinate c) {
+		SphericCoordinate s = c.asSphericCoordinate();
+		double sum = 2 * this.radius * s.radius * (Math.sin(Math.toRadians(this.longitude)) *
+					 Math.sin(Math.toRadians(s.longitude)) *
+					 Math.cos(Math.toRadians(this.latitude - s.latitude)) + Math.cos(Math.toRadians(this.longitude)) *
+					 Math.cos(Math.toRadians(s.longitude)));
+
+		return Math.sqrt(this.radius * this.radius + s.radius * s.radius - sum);
 	}
 
 }

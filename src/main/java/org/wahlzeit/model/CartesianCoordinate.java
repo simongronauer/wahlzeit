@@ -1,6 +1,6 @@
 package org.wahlzeit.model;
 
-public class CartesianCoordinate implements Coordinate {
+public class CartesianCoordinate extends AbstractCoordinate {
 	
 	private double x;
 	private double y;
@@ -47,39 +47,20 @@ public class CartesianCoordinate implements Coordinate {
     
     @Override
     public boolean isEqual(Coordinate other){
-    	CartesianCoordinate c = other.cartesianCoordinate();
+    	CartesianCoordinate c = other.asCartesianCoordinate();
     	double epsilon = 0.00001;
         return ((Math.abs(getX() - c.getX()) < epsilon) && 
 				(Math.abs(getY() - c.getY()) < epsilon) &&
 				(Math.abs(getZ() - c.getZ()) < epsilon));
     }
     
-    @Override 
-    public boolean equals(Object obj) {
-        if(obj instanceof CartesianCoordinate){
-            return isEqual((CartesianCoordinate) obj);
-        }
-        return false;
-    }
-
-	@Override
-	public CartesianCoordinate cartesianCoordinate() {
+    @Override
+	public CartesianCoordinate asCartesianCoordinate() {
 		return this;
 	}
 
 	@Override
-	public double getCartesianDistance(Coordinate c) {
-		CartesianCoordinate c1 = c.cartesianCoordinate();
-		double diffx = (c1.getX() - this.x);
-		double diffy = (c1.getY() - this.y);
-		double diffz = (c1.getZ() - this.z);
-		double root = (diffx * diffx) + (diffy * diffy) + (diffz * diffz);
-		double distance = Math.sqrt(root);
-		return distance;
-	}
-
-	@Override
-	public SphericCoordinate sphericCoordinate() {
+	public SphericCoordinate asSphericCoordinate() {
 		double latitude, longitude, radius;
 		if ((x == 0) && (y == 0) && (z == 0)) return new SphericCoordinate();
 		radius = Math.sqrt(x*x + y*y + z*z);
@@ -89,8 +70,26 @@ public class CartesianCoordinate implements Coordinate {
 	}
 
 	@Override
-	public double getSphericDistance(Coordinate c) {
-		return getDistance(c.cartesianCoordinate());
-	}
+    public int hashCode() {
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(x);
+        result = (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(y);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(z);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
 
+	@Override
+	public double calcDistance(Coordinate c) {
+		CartesianCoordinate c1 = c.asCartesianCoordinate();
+		double diffx = (c1.getX() - this.x);
+		double diffy = (c1.getY() - this.y);
+		double diffz = (c1.getZ() - this.z);
+		double root = (diffx * diffx) + (diffy * diffy) + (diffz * diffz);
+		double distance = Math.sqrt(root);
+		return distance;
+	}
 }
