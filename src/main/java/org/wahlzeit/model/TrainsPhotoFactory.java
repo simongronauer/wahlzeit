@@ -21,7 +21,7 @@ public class TrainsPhotoFactory extends PhotoFactory {
      */
     public static synchronized PhotoFactory getInstance() {
         if (instance == null) {
-            log.config(LogBuilder.createSystemMessage().addAction("setting generic PhotoFactory").toString());
+            log.config(LogBuilder.createSystemMessage().addAction("setting generic TrainsPhotoFactory").toString());
             setInstance(new TrainsPhotoFactory());
         }
 

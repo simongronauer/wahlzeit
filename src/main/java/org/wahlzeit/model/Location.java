@@ -2,27 +2,33 @@ package org.wahlzeit.model;
 
 public class Location {
 
-	private CartesianCoordinate coordinate;
+	private Coordinate coordinate;
 	
 	public Location () {
-		this(new CartesianCoordinate());
+		this(null);
 	}
 	
-	public Location (CartesianCoordinate coordinate) {
+	public Location (Coordinate coordinate) {
 		this.coordinate = coordinate;
 	}
 	
-	public CartesianCoordinate getCoordinate() {
+	public Coordinate getCoordinate() {
         return coordinate;
     }
 	
-	public void setCoordinate(CartesianCoordinate coordinate) {
+	public void setCoordinate(Coordinate coordinate) {
 		this.coordinate = coordinate;
 	}
 	
-	public void setCoordinate(double x, double y, double z) {
-		this.coordinate.setX(x);
-		this.coordinate.setY(y);
-		this.coordinate.setZ(z);
+	@Override 
+    public boolean equals(Object o) {
+        if(o instanceof Location){
+            return isEqual((Location) o);
+        }
+        return false;
+    }
+
+	public boolean isEqual(Location l) {
+		return getCoordinate().isEqual(l.coordinate);
 	}
 }
