@@ -36,6 +36,17 @@ public abstract class AbstractCoordinate implements Coordinate {
 	@Override
 	public abstract boolean isEqual(Coordinate c);
 	
+	@Override
 	public abstract int hashCode();
+	
+	public abstract void assertClassInvariants();
+	
+	protected void assertNotNegative(double v) {
+		if (v < 0) throw new IllegalStateException("value must not be negative");
+	}
+	
+	protected void assertDouble(double v) {
+		if ((Double.isNaN(v)) || (v > Double.MAX_VALUE)) throw new IllegalStateException("value must be a double");
+	}
 	
 }

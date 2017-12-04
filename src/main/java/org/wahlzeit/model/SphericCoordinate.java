@@ -95,4 +95,11 @@ public class SphericCoordinate extends AbstractCoordinate {
 		return Math.sqrt(this.radius * this.radius + s.radius * s.radius - sum);
 	}
 
+	@Override
+	public void assertClassInvariants() {
+		assertNotNegative(radius);
+		assertDouble(latitude);
+		assertDouble(longitude);
+	}
+
 }

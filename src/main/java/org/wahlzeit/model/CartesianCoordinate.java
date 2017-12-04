@@ -92,4 +92,10 @@ public class CartesianCoordinate extends AbstractCoordinate {
 		double distance = Math.sqrt(root);
 		return distance;
 	}
+
+	public void assertClassInvariants() {
+		assertDouble(x);
+		assertDouble(y);
+		assertDouble(z);
+	}
 }
