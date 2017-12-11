@@ -6,25 +6,29 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	private double y;
 	private double z;
 	
-	public CartesianCoordinate(double x, double y, double z) {
+	public CartesianCoordinate(double x, double y, double z) throws IllegalArgumentException {
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		assertClassInvariants();
 	}
 	
 	public CartesianCoordinate() {
 		this(0, 0, 0);
 	}
 	
-	public void setX(double x) {
+	public void setX(double x) throws IllegalArgumentException {
+		assertDouble(x);
 		this.x = x;
 	}
 	
-	public void setY(double y) {
-		this.y = x;
+	public void setY(double y) throws IllegalArgumentException {
+		assertDouble(y);
+		this.y = y;
 	}
 	
-	public void setZ(double z) {
+	public void setZ(double z) throws IllegalArgumentException {
+		assertDouble(z);
 		this.z = z;
 	}
     
@@ -41,7 +45,8 @@ public class CartesianCoordinate extends AbstractCoordinate {
     }
     
     @Override
-    public double getDistance(Coordinate c) {
+    public double getDistance(Coordinate c) throws IllegalArgumentException {
+    	this.assertClassInvariants();
 		return getCartesianDistance(c);
 	}
     
@@ -56,6 +61,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
     
     @Override
 	public CartesianCoordinate asCartesianCoordinate() {
+    	this.assertClassInvariants();
 		return this;
 	}
 
@@ -83,8 +89,9 @@ public class CartesianCoordinate extends AbstractCoordinate {
     }
 
 	@Override
-	public double calcDistance(Coordinate c) {
+	public double calcDistance(Coordinate c) throws IllegalArgumentException {
 		CartesianCoordinate c1 = c.asCartesianCoordinate();
+		c1.assertClassInvariants();
 		double diffx = (c1.getX() - this.x);
 		double diffy = (c1.getY() - this.y);
 		double diffz = (c1.getZ() - this.z);

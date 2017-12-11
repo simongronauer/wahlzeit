@@ -7,25 +7,29 @@ public class SphericCoordinate extends AbstractCoordinate {
 	private double longitude;
 	private double radius;
 	
-	public SphericCoordinate(double latitude, double longitude, double radius) {
+	public SphericCoordinate(double latitude, double longitude, double radius) throws IllegalArgumentException {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.radius = radius;
+		assertClassInvariants();
 	}
 	
 	public SphericCoordinate() {
 		this(0, 0, 0);
 	}
 	
-	public void setLatitude(double latitude) {
+	public void setLatitude(double latitude) throws IllegalArgumentException {
+		assertDouble(latitude);
 		this.latitude = latitude;
 	}
 	
-	public void setLongitude(double longitude) {
+	public void setLongitude(double longitude) throws IllegalArgumentException {
+		assertDouble(longitude);
 		this.longitude = longitude;
 	}
 	
-	public void setRadius(double radius) {
+	public void setRadius(double radius) throws IllegalArgumentException {
+		assertNotNegative(radius);
 		this.radius = radius;
 	}
     
@@ -42,7 +46,8 @@ public class SphericCoordinate extends AbstractCoordinate {
     }
     
     @Override
-    public double getDistance(Coordinate c) {
+    public double getDistance(Coordinate c) throws IllegalArgumentException {
+    	this.assertClassInvariants();
 		return getSphericDistance(c);
 	}
     
@@ -62,6 +67,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 		double x = radius * Math.sin(longitude) * Math.cos(latitude);
 		double y = radius * Math.sin(longitude) * Math.sin(latitude);
 		double z = radius * Math.cos(longitude);
+		assertClassInvariants();
 		return new CartesianCoordinate(x,y,z);
 	}
 
@@ -85,8 +91,9 @@ public class SphericCoordinate extends AbstractCoordinate {
 	}
 
 	@Override
-	public double calcDistance(Coordinate c) {
+	public double calcDistance(Coordinate c) throws IllegalArgumentException {
 		SphericCoordinate s = c.asSphericCoordinate();
+		s.assertClassInvariants();
 		double sum = 2 * this.radius * s.radius * (Math.sin(Math.toRadians(this.longitude)) *
 					 Math.sin(Math.toRadians(s.longitude)) *
 					 Math.cos(Math.toRadians(this.latitude - s.latitude)) + Math.cos(Math.toRadians(this.longitude)) *

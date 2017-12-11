@@ -12,12 +12,19 @@ public abstract class AbstractCoordinate implements Coordinate {
 
 	@Override
 	public double getCartesianDistance(Coordinate c) {
-		return this.asCartesianCoordinate().calcDistance(c);
+		assertClassInvariants();
+		double distance = this.asCartesianCoordinate().calcDistance(c);
+		assertClassInvariants();
+		return distance;
 	}
 
 	@Override
 	public double getSphericDistance(Coordinate c) {
-		return this.asSphericCoordinate().calcDistance(c);
+		assertClassInvariants();
+		double distance = this.asSphericCoordinate().calcDistance(c);		
+		assertClassInvariants();
+		return distance;
+
 	}
 
 	public abstract double calcDistance(Coordinate c);
