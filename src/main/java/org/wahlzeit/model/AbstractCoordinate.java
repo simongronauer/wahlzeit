@@ -46,7 +46,7 @@ public abstract class AbstractCoordinate implements Coordinate {
 	@Override
 	public abstract int hashCode();
 	
-	public abstract void assertClassInvariants();
+	protected abstract void assertClassInvariants();
 	
 	protected void assertNotNegative(double v) {
 		if (v < 0) throw new IllegalStateException("value must not be negative");
@@ -56,4 +56,9 @@ public abstract class AbstractCoordinate implements Coordinate {
 		if ((Double.isNaN(v)) || (v > Double.MAX_VALUE)) throw new IllegalStateException("value must be a double");
 	}
 	
+	protected void assertNotNull(Object obj) {
+		if (obj == null) {
+			throw new IllegalArgumentException("object must not be NULL");
+		}
+	}
 }
