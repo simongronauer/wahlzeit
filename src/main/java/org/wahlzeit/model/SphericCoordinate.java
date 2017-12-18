@@ -1,11 +1,14 @@
 package org.wahlzeit.model;
 
+import java.util.HashMap;
+
 public class SphericCoordinate extends AbstractCoordinate {
 	
 	private final double EARTHRADIUS = 6371.0;
-	private double latitude;
-	private double longitude;
-	private double radius;
+	private final double latitude;
+	private final double longitude;
+	private final double radius;
+	private static final HashMap<Integer, SphericCoordinate> instances = new HashMap<> ();
 	
 	public SphericCoordinate(double latitude, double longitude, double radius) throws IllegalArgumentException {
 		assertClassInvariants();
@@ -21,31 +24,29 @@ public class SphericCoordinate extends AbstractCoordinate {
 		assertNotNull(this);
 	}
 	
-	public void setLatitude(double latitude) throws IllegalArgumentException {
-		assertDouble(latitude);
-		this.latitude = latitude;
-	}
-	
-	public void setLongitude(double longitude) throws IllegalArgumentException {
-		assertDouble(longitude);
-		this.longitude = longitude;
-	}
-	
-	public void setRadius(double radius) throws IllegalArgumentException {
-		assertNotNegative(radius);
-		this.radius = radius;
-	}
-    
 	public double getLatitude() {
-        return latitude;
+		assertClassInvariants();
+        return this.latitude;
     }
 	
 	public double getLongitude() {
-        return longitude;
+		assertClassInvariants();
+        return this.longitude;
     }
 
     public double getRadius() {
-        return radius;
+		assertClassInvariants();
+        return this.radius;
+    }
+    
+    public static synchronized SphericCoordinate getInstance(double latitude, double longitude, double radius) {
+    	SphericCoordinate c = new SphericCoordinate(latitude, longitude, radius);
+    	SphericCoordinate d = c.instances.get(c.hashCode());
+    	if (d == null) {
+    		instances.put(c.hashCode(), c);
+    		d = c;
+    	}
+    	return d;
     }
     
     @Override
@@ -77,7 +78,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 		double y = radius * Math.sin(longitude) * Math.sin(latitude);
 		double z = radius * Math.cos(longitude);
 		assertClassInvariants();
-		return new CartesianCoordinate(x,y,z);
+		return CartesianCoordinate.getInstance(x,y,z);
 	}
 
 

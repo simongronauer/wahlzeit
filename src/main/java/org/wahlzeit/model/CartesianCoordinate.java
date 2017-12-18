@@ -1,10 +1,13 @@
 package org.wahlzeit.model;
 
+import java.util.HashMap;
+
 public class CartesianCoordinate extends AbstractCoordinate {
 	
-	private double x;
-	private double y;
-	private double z;
+	private final double x;
+	private final double y;
+	private final double z;
+	private final static HashMap<Integer, CartesianCoordinate> instances = new HashMap<> ();
 	
 	public CartesianCoordinate(double x, double y, double z) throws IllegalArgumentException {
 		assertClassInvariants();
@@ -20,31 +23,29 @@ public class CartesianCoordinate extends AbstractCoordinate {
 		assertNotNull(this);
 	}
 	
-	public void setX(double x) throws IllegalArgumentException {
-		assertDouble(x);
-		this.x = x;
-	}
-	
-	public void setY(double y) throws IllegalArgumentException {
-		assertDouble(y);
-		this.y = y;
-	}
-	
-	public void setZ(double z) throws IllegalArgumentException {
-		assertDouble(z);
-		this.z = z;
-	}
-    
 	public double getX() {
-        return x;
+		assertClassInvariants();
+        return this.x;
     }
 	
 	public double getY() {
-        return y;
+		assertClassInvariants();
+        return this.y;
     }
 
     public double getZ() {
-        return z;
+		assertClassInvariants();
+        return this.z;
+    }
+    
+    public static synchronized CartesianCoordinate getInstance(double x, double y, double z) {
+    	CartesianCoordinate c = new CartesianCoordinate(x, y, z);
+    	CartesianCoordinate d = c.instances.get(c.hashCode());
+    	if (d == null) {
+    		instances.put(c.hashCode(), c);
+    		d = c;
+    	}
+    	return d;
     }
     
     @Override
@@ -82,7 +83,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 		latitude = Math.atan2(y, x);
 		longitude = Math.acos(z/radius);
 		assertClassInvariants();
-		return new SphericCoordinate(latitude, longitude, radius);
+		return SphericCoordinate.getInstance(latitude, longitude, radius);
 	}
 
 	@Override
