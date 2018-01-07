@@ -33,11 +33,18 @@ import org.wahlzeit.services.Persistent;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import org.wahlzeit.utils.PatternInstance;
 
 /**
  * A Client uses the system. It is an abstract superclass. This package defines guest, user, moderator, and
  * administrator clients.
  */
+
+@PatternInstance(
+		patternName = "Client",
+		participants = {"Client"}
+)
+
 @Entity
 public abstract class Client implements Serializable, Persistent {
 

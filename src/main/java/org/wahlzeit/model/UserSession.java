@@ -21,6 +21,7 @@
 package org.wahlzeit.model;
 
 import org.wahlzeit.services.Language;
+
 import org.wahlzeit.services.Session;
 import org.wahlzeit.utils.HtmlUtil;
 
@@ -31,12 +32,19 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
+import org.wahlzeit.utils.PatternInstance;
 
 /**
  * Wrapper class for {@link HttpSession} to provide a readable interface for Wahlzeit.
  *
  * {@link HttpSession}s are managed automatically by Google App Engine.
  */
+
+@PatternInstance(
+		patternName = "Session",
+		participants = {"Session"}
+)
+
 public class UserSession extends Session implements Serializable {
 
 	/**

@@ -21,11 +21,18 @@
 package org.wahlzeit.model;
 
 import org.wahlzeit.services.DataObject;
+import org.wahlzeit.utils.PatternInstance;
 
 /**
  * A case is a user complaint, most notably about an inappropriate photo.
  * Subclasses capture the specifics of different types of cases; here only an id is provided.
  */
+
+@PatternInstance(
+		patternName = "Case",
+		participants = {"Case"}
+)
+
 public abstract class Case extends DataObject {
 
 	/**

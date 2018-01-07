@@ -31,10 +31,17 @@ import java.util.List;
 import java.util.Random;
 import java.util.logging.Logger;
 
+import org.wahlzeit.utils.PatternInstance;
 /**
  * A class to specify a photo filter.
  * A photo filter captures selection ("filtering") criteria for photos.
  */
+
+@PatternInstance(
+		patternName = "Filter",
+		participants = {"Filter"}
+)
+
 public class PhotoFilter implements Serializable {
 
 	private static Logger log = Logger.getLogger(PhotoFilter.class.getName());
