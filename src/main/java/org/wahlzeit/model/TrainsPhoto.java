@@ -2,6 +2,28 @@ package org.wahlzeit.model;
 
 import com.googlecode.objectify.annotation.Subclass;
 
+/* Method calls for new object: 
+ * The new TrainsPhoto-object is created in the constructor:
+ * TrainsPhoto(PhotoId id, String country, int power, int topSpeed) which sets the attributes
+ * id, country, power and topSpeed.
+ * 
+ * 
+ * 
+ * Object creation:
+ * 1.Delegation:
+ * on-the-spot, by constructor TrainsPhoto
+ * 2.Selection:
+ * by subclassing, this class is subclass of Photo
+ * 3.Configuration:
+ * ---
+ * 4.Instantiation:
+ * in-code, by constructor
+ * 5.Initialization:
+ * by key-value-pair, two constructors
+ * 6.Building:
+ * Default, builts itself
+ */
+
 @Subclass
 public class TrainsPhoto extends Photo {
 
