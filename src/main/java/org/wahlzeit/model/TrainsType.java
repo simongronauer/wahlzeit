@@ -4,6 +4,12 @@ import java.util.HashSet;
 import java.util.Set;
 import org.wahlzeit.services.DataObject;
 
+/*Collaboration:
+ * 
+ *Type: Type Object
+ *Role: Type Object
+ */
+
 public class TrainsType extends DataObject {
 	
 	final protected String typeName;

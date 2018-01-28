@@ -22,6 +22,13 @@ import com.googlecode.objectify.annotation.Subclass;
  * by key-value-pair, two constructors
  * 6.Building:
  * Default, builts itself
+ *
+ *
+ *Collaboration:
+ *
+ *Type: Client Service
+ *Role: Client
+ *
  */
 
 @Subclass

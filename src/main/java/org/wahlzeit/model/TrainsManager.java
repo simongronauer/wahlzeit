@@ -2,6 +2,23 @@ package org.wahlzeit.model;
 
 import java.util.HashMap;
 
+/* Collaboration:
+ * Type: Client Service
+ * Role: Service
+ */
+
+/*
+ * Collaboration:
+ * Type: Type Object
+ * Role: Base Object
+ */
+
+/*
+ * Collaboration:
+ * Type: Manager
+ * Role: Element
+ */
+
 public class TrainsManager {
 
 	protected static HashMap<String, Train> Trains = new HashMap<String, Train>();
