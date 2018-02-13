@@ -26,6 +26,8 @@ public class Train {
 	protected TrainsType type;
 	protected String name;
 	
+	public Train(){}
+	
 	public Train(TrainsType type, String name) {
 		this.type = type;
 		this.name = name;
